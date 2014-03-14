@@ -1,0 +1,21 @@
+CppUnit 
+--------
+
+1. Write unit test as .cpp and add proper CppUnit includes:
+///
+#ifndef <FILENAME>_H
+#define	<FILENAME>_H
+
+#include <cppunit/extensions/HelperMacros.h>
+#include "</Path/File to be tested>.cpp"
+///
+
+2. Add line to makefile
+///
+<FILENAME>.o: <FILENAME>.cpp
+	gcc -c <FILENAME>.cpp -I${CPPUNIT_PATH}/include
+///
+
+and add <FILENAME>.o to first and second lines of "runtests:" at the top
+
+3. Run "make; ./runtests" to run the tests

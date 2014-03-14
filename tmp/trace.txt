@@ -1,0 +1,7 @@
+opened successfully 
+test
+123
+opened successfully 
+second
+file
+end trace
