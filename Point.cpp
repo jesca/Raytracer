@@ -29,6 +29,13 @@ Point::Point (float px, float py, float pz){
         y+=v[1];
         z+=v[2];
     }
+    Point Point::addr(Vector3f v) {
+    x+=v[0];
+    y+=v[1];
+    z+=v[2];
+        Point p = Point(x,y,z);
+        return p;
+    }
     void Point::sub(Vector3f v) {
         x-=v[0];
         y-=v[1];

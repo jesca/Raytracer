@@ -1,5 +1,6 @@
 #include "RayTracer.h"
 #define cout std::cout
+#define Transform Eigen::Transform<float, 4, Eigen::Projective>
 
 RayTracer::RayTracer(){
     maxDepth = 10;
@@ -31,45 +32,39 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     Vector3f n1(1,0,0);
     LocalGeo local = LocalGeo(p1, n1);
     Sphere test(0,0,5,1,0,100);
-    if(test.intersect(ray, &thit, &local)){
-        Color c(1,0,0);
-        *color = c;
-    }
-    else {
-                *color = Color(0,0,0);
-    }
+    
     Matrix4f matr;
     matr <<
     1,0,0,0,
     0,1,0,0,
     0,0,1,0,
     0,0,0,1;
-    Transformation trans(matr);
+    Transform trans(matr);
     BRDF b = BRDF();
     Material testmaterial(b);
     GeometricPrimitive p = GeometricPrimitive(&test, trans,&testmaterial);
     Intersection in;
-//    if(in->getPrimitive()->intersect())
-//        cout << "light blocked \n";
-//        *color = Color(0,0,0);
-//        return;
+    //    if(in->getPrimitive()->intersect())
+    //        cout << "light blocked \n";
+    //        *color = Color(0,0,0);
+    //        return;
     if(!p.intersect(ray, &thit, &in)){
         //color black
         *color = Color(0,0,0);
         return;
-
+        
     } else {
         Vector3f normal = in.getLocal().getNormal();
-        Vector3f n = Vector3f(normal[0],normal[1],normal[2]);
-
+        // cout << normal;
+        // Vector3f n = Vector3f(normal[0],normal[1],normal[2]);
+        
         Vector3f l(1,1,-1);
-        diffuse(Color(.3,.3,.3), color, Color(1,1,1), n, l);
-        *color = Color(1,0,0);
-
+        diffuse(Color(.1,.1,.3), color, Color(.3,1,.2), normal, l);
+        // *color = Color(1,0,0);
+        
         
     }
     
-
- 
+    
+    
 }
-

@@ -14,7 +14,7 @@ bool Sphere::intersect(Ray &ray){
     float a, b, c,t1, t2, discriminant;
     Vector3f dir = ray.dir();
     Vector3f e_minus_c = ray.pos().sub(center);
-
+    
     a = dir.dot(dir);
     b= (2*dir).dot((e_minus_c));
     c = (e_minus_c).dot(e_minus_c)-pow(radius,2.0);
@@ -28,7 +28,7 @@ bool Sphere::intersect(Ray &ray){
 		float sqrtdisc = sqrt(discriminant);
 		t1 = (-b + sqrtdisc) / (2 * a);
 		t2 = (-b - sqrtdisc) / (2 * a);
-		
+        
 		if((t1 > ray.t_min() && t1 < ray.t_max()) ||
            (t2 > ray.t_min() && t2 < ray.t_max())){
 			return true;
@@ -66,20 +66,18 @@ bool Sphere::intersect(Ray& ray, float *thit, LocalGeo *local){
         if (t<ray.t_min() || t>ray.t_max()){
             return false;
         }
- 
+        
         
         else {
             *thit=t;
             Point lpos=ray.pos();
             lpos.add((t*ray.dir()));
             local->setPos(lpos);
-            local->setNormal(lpos.sub(center)); //normal will be vector3f 
+            local->setNormal(lpos.sub(center)); //normal will be vector3f
         }
         return true;
     }
 }
-
-
 
 
 

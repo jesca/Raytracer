@@ -10,23 +10,24 @@
 #include "Ray.h"
 #include "BRDF.h"
 #include "Intersection.h"
-#include "Transformation.h"
+#include "Eigen/Geometry"
 #include "Shape.h"
 #include "Material.h"
 #include "Primitive.h"
 #include "Raytracer.h"
-
+#define Matrix4f Eigen::Matrix4f
+#define Transform Eigen::Transform<float, 4, Eigen::Projective>
 class GeometricPrimitive : public Primitive {
     
 public:
-   GeometricPrimitive(Shape* s, Transformation objToWorld, Material* m);
+   GeometricPrimitive(Shape* s, Transform objToWorld, Material* m);
 
     bool intersect (Ray& ray, float* thit, Intersection* inter);
     
     bool intersect(Ray& ray);
 
 private:
-    Transformation objToWorld, worldToObj;
+    Transform objToWorld, worldToObj;
     Shape* shape;
     Material* material;
 //    Material* material;
