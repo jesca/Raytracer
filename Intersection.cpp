@@ -30,6 +30,6 @@ Primitive* Intersection::getPrimitive(){
 void Intersection::setLocalGeo(LocalGeo g){
     localGeo=g;
 }
-void Intersection::setPrimitive(Primitive& p){
-    primitive=&p;
+void Intersection::setPrimitive(Primitive* p){
+    primitive=p;
 }

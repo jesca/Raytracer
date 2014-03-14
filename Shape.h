@@ -14,9 +14,6 @@ class Shape
 public:
     virtual bool intersect(Ray& ray, float* thit, LocalGeo* local){};
     virtual bool intersect(Ray& ray){};
-    void createTriangle(float centerx,float centery, float radius); //fix later
-    bool isTriangle();
-    bool isCircle();
     
 
  

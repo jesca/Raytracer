@@ -26,8 +26,8 @@ bool Sphere::intersect(Ray &ray){
 	}
 	else{
 		float sqrtdisc = sqrt(discriminant);
-		t1 = (-b + sqrtdisc) / (2 * a);
-		t2 = (-b - sqrtdisc) / (2 * a);
+		t1 = (-b/2.0 + sqrtdisc) / a;
+		t2 = (-b/2.0 - sqrtdisc) / a;
         
 		if((t1 > ray.t_min() && t1 < ray.t_max()) ||
            (t2 > ray.t_min() && t2 < ray.t_max())){

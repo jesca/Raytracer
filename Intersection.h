@@ -24,7 +24,7 @@ public:
 //    Primitive& getPrimitive(void);
     Primitive* getPrimitive();
     void setLocalGeo(LocalGeo);
-    void setPrimitive(Primitive&);
+    void setPrimitive(Primitive*);
 
 private:
     LocalGeo localGeo;

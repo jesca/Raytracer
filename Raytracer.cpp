@@ -15,10 +15,10 @@ void RayTracer::diffuse(Color kd,Color* color, Color lcolor, Vector3f n, Vector3
     nhat.normalize();
     lhat.normalize();
     float ndotl = fmax(nhat.dot(lhat),0);
-    color->add( Color( kd.getR()*lcolor.getR()*ndotl,
-                      kd.getG()*lcolor.getG()*ndotl,
-                      kd.getB()*lcolor.getB()*ndotl) );
-    
+    float red = fmax(kd.getR()*(lcolor.getR()*ndotl),0);
+    float green = fmax(kd.getG()*(lcolor.getG()*ndotl),0);
+    float blue = fmax(kd.getB()*(lcolor.getB()*ndotl),0);
+    color->add(Color(red,green,blue));
 }
 
 
@@ -50,7 +50,9 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     //        return;
     if(!p.intersect(ray, &thit, &in)){
         //color black
-        *color = Color(0,0,0);
+        color->setR(0);
+        color->setG(0);
+        color->setB(0);
         return;
         
     } else {
@@ -58,8 +60,8 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         // cout << normal;
         // Vector3f n = Vector3f(normal[0],normal[1],normal[2]);
         
-        Vector3f l(1,1,-1);
-        diffuse(Color(.1,.1,.3), color, Color(.3,1,.2), normal, l);
+        Vector3f l(10,10,-1);
+        diffuse(Color(.1,.1,.1), color, Color(1,.1,.1), normal, l);
         // *color = Color(1,0,0);
         
         
