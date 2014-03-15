@@ -82,12 +82,13 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         // Vector3f n = Vector3f(normal[0],normal[1],normal[2]);
         
         Vector3f l(200,200,-100);
-        diffuse(Color(.6,.3,.5), color, Color(.9,.7,.5), normal, l);
-        l.normalize(); normal.normalize();
-        float ldotn = l.dot(normal);
-        Vector3f r = l + 2*ldotn*normal;
+        diffuse(Color(.3,.6,.2), color, Color(.6,.6,.5), normal, l);
+        Vector3f L(-100,-100,-100);
+        L.normalize(); normal.normalize();
+        float Ldotn = L.dot(normal);
+        Vector3f r = -L + 2*Ldotn*normal;
         Vector3f v = ray.dir(); v.normalize();
-        specular(Color(.6,.3,.5), color, Color(.9,.7,.5), r, v, 40);
+        specular(Color(.4,.3,.8), color, Color(.8,.7,.7), r, v, 40);
         // *color = Color(1,0,0);
         
         
