@@ -12,19 +12,18 @@
 class Light {
     
 public:
-   // virtual void generateLightRay(Intersection& in, Ray* light_ray, Color* light_color){}; // is color pointer or address?
-
+   virtual void generateLightRay(LocalGeo& in, Ray* light_ray, Color* light_color){};
 };
 
-class PointLight : public Light{
+class PointLight : public Light {
 public:
     //color, direction
 	PointLight(){};
     PointLight(Point position, Vector3f color){
- //   void generateLightRay(Intersection& in, Ray* light_ray, Color* light_color);
+    void generateLightRay(Intersection& in, Ray* light_ray, Color* light_color);
 private:
 	Vector3f color;
-    Point position;
+    Vector3f direction;
 };
 
 
@@ -34,8 +33,8 @@ private:
 class DirectionalLight : public Light{
 public:
 	DirectionalLight(){};
-    generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightcolor){
-  //  void generateLightRay(LocalGeo& local, Ray* light_ray,Color* light_color);
+    DirectionalLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightcolor){
+    void generateLightRay(LocalGeo& local, Ray* light_ray,Color* light_color);
 private:
 	Vector3f position;
     Vector3f light_direction;
