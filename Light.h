@@ -19,7 +19,7 @@ class PointLight : public Light {
 public:
     //color, direction
 	PointLight(){};
-    PointLight(Point position, Vector3f color){
+    PointLight(Point position, Vector3f light_color);
     void generateLightRay(Intersection& in, Ray* light_ray, Color* light_color);
 private:
 	Vector3f color;
@@ -30,15 +30,18 @@ private:
 
 
 
-class DirectionalLight : public Light{
+class DirectionalLight : public Light {
 public:
 	DirectionalLight(){};
-    DirectionalLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightcolor){
+    DirectionalLight(Vector3f direction, Vector3f light_color);
     void generateLightRay(LocalGeo& local, Ray* light_ray,Color* light_color);
 private:
 	Vector3f position;
     Vector3f light_direction;
 };
+    
+
+
 
 
 #endif
