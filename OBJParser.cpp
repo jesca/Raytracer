@@ -4,8 +4,8 @@
 #define Vector3f Eigen::Vector3f
 #define cout std::cout
 
-#define width 300
-#define height 300
+#define width 600
+#define height 600
 
 using namespace std;
 
