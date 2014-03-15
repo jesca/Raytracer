@@ -14,13 +14,32 @@ void RayTracer::diffuse(Color kd,Color* color, Color lcolor, Vector3f n, Vector3
     Vector3f lhat = l;
     nhat.normalize();
     lhat.normalize();
-    float ndotl = fmax(nhat.dot(lhat),0);
-    float red = fmax(kd.getR()*(lcolor.getR()*ndotl),0);
-    float green = fmax(kd.getG()*(lcolor.getG()*ndotl),0);
-    float blue = fmax(kd.getB()*(lcolor.getB()*ndotl),0);
-    color->add(Color(red,green,blue));
+    float ndotl = fmax(nhat.dot(lhat),0.0f);
+    float red = fmax(kd.getR()*(lcolor.getR()*ndotl),0.0f);
+    float green = fmax(kd.getG()*(lcolor.getG()*ndotl),0.0f);
+    float blue = fmax(kd.getB()*(lcolor.getB()*ndotl),0.0f);
+     // color->print();
+    // color->add(Color(red,green,blue));
+    color->setR(red);
+    color->setG(green);
+    color->setB(blue);
+   
 }
 
+void RayTracer::specular(Color ks,Color* color, Color lcolor, Vector3f r, Vector3f v, float p){
+    Vector3f rhat = r;
+    Vector3f vhat = v;
+    rhat.normalize();
+    vhat.normalize();
+    float rdotv = pow(fmax(rhat.dot(vhat),0.0f),p);
+    float red = ks.getR()*lcolor.getR()*rdotv;
+    float green = ks.getG()*(lcolor.getG()*rdotv);
+    float blue = ks.getB()*(lcolor.getB()*rdotv);
+     // color->print();
+    // color->add(Color(red,green,blue));
+    color->add(Color(red,green,blue));
+   
+}
 
 void RayTracer::trace(Ray& ray, int depth, Color* color){
     if(depth > maxDepth){
@@ -31,7 +50,7 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     Point p1(0,0,0);
     Vector3f n1(1,0,0);
     LocalGeo local = LocalGeo(p1, n1);
-    Sphere test(0,0,5,1,0,100);
+    Sphere test(0,0,5,1);
     
     Matrix4f matr;
     matr <<
@@ -60,8 +79,13 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         // cout << normal;
         // Vector3f n = Vector3f(normal[0],normal[1],normal[2]);
         
-        Vector3f l(10,10,-1);
-        diffuse(Color(.1,.1,.1), color, Color(1,.1,.1), normal, l);
+        Vector3f l(200,200,-100);
+        diffuse(Color(.6,.3,.5), color, Color(.9,.7,.5), normal, l);
+        l.normalize(); normal.normalize();
+        float ldotn = l.dot(normal);
+        Vector3f r = l + 2*ldotn*normal;
+        Vector3f v = ray.dir(); v.normalize();
+        specular(Color(.6,.3,.5), color, Color(.9,.7,.5), r, v, 40);
         // *color = Color(1,0,0);
         
         

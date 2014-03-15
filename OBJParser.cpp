@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char** args){
     
     Film film (width, height);
-    Color c1(0,0,0);
+    Color color(0,0,0);
     Sample s1(0,0);
     Point p(0,0,-1);
     Vector3f v(0,0,-1);
@@ -28,8 +28,8 @@ int main(int argc, char** args){
         for(int i=0; i<width; i++){
             s1 = Sample(i, j);
             camera.generateRay(s1, &ray);
-            rayTracer.trace(ray, 1, &c1);
-            film.commit(s1, c1);
+            rayTracer.trace(ray, 1, &color);
+            film.commit(s1, color);
         }
         
     }

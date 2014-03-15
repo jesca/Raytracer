@@ -1,10 +1,8 @@
 #include "Shape.h"
 
-Sphere::Sphere(float centerx, float centery, float centerz,float radius,float tmin, float tmax){
+Sphere::Sphere(float centerx, float centery, float centerz,float radius){
     this->radius=radius;
     this->center=Point(centerx,centery,centerz);
-    this->tmax=tmax;
-    this->tmin=tmin;
 }
 
 
@@ -69,11 +67,11 @@ bool Sphere::intersect(Ray& ray, float *thit, LocalGeo *local){
         
         
         else {
-            *thit=t;
+            thit=&t;
             Point lpos=ray.pos();
             lpos.add((t*ray.dir()));
             local->setPos(lpos);
-            local->setNormal(lpos.sub(center)); //normal will be vector3f
+            local->setNormal(lpos.sub(center)/radius); //normal will be vector3f
         }
         return true;
     }

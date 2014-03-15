@@ -24,7 +24,7 @@ public:
 class Sphere : public Shape
 {
 public:
-    Sphere(float centerx,float centery,float centerz, float radius, float tmin, float tmax);
+    Sphere(float centerx,float centery,float centerz, float radius);
     bool intersect(Ray& ray, float* thit, LocalGeo* local);
      bool intersect(Ray& ray);
 
