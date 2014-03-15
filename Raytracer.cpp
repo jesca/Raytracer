@@ -8,6 +8,10 @@ RayTracer::RayTracer(){
     thit = 0;
     PointLight pl;
 }
+void RayTracer::ambient(Color ka, Color* color){
+    color->add(ka);
+
+}
 
 void RayTracer::diffuse(Color kd,Color* color, Color lcolor, Vector3f n, Vector3f l){
     Vector3f nhat = n;
@@ -81,14 +85,15 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         // cout << normal;
         // Vector3f n = Vector3f(normal[0],normal[1],normal[2]);
         
+        ambient(Color(.1,.1,.2), color);
         Vector3f l(200,200,-100);
-        diffuse(Color(.3,.6,.2), color, Color(.6,.6,.5), normal, l);
+        diffuse(Color(.3,.6,.7), color, Color(.6,.6,.7), normal, l);
         Vector3f L(-100,-100,-100);
         L.normalize(); normal.normalize();
         float Ldotn = L.dot(normal);
         Vector3f r = -L + 2*Ldotn*normal;
         Vector3f v = ray.dir(); v.normalize();
-        specular(Color(.4,.3,.8), color, Color(.8,.7,.7), r, v, 40);
+        specular(Color(.7,.7,.7), color, Color(.7,.7,.7), r, v, 40);
         // *color = Color(1,0,0);
         
         

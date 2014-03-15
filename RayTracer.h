@@ -21,6 +21,7 @@ public:
     RayTracer();
     void trace(Ray& ray, int depth, Color* color);
 private:
+    void ambient(Color ka, Color* color);
     void diffuse(Color kd,Color* color, Color lcolor, Vector3f n, Vector3f l);
     void specular(Color ks,Color* color, Color lcolor, Vector3f r, Vector3f v, float p);
     int maxDepth;
