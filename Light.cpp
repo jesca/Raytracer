@@ -1,14 +1,12 @@
 #include "light.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <limits>
-std::numeric_limits<float>::max();
+#include <cfloat>
 
 
-
-PointLight::PointLight(Point position, Vector3f color){
+PointLight::PointLight(Point position, Vector3f light_color){
 	plPos = position;
-	plColor = color;
+	plColor = light_color;
 }
 
 void PointLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightcolor){
@@ -26,12 +24,13 @@ void PointLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightc
 
 DirectionalLight::DirectionalLight(Vector3f direction, Vector3f light_color) {
 	dlDir = direction;
-	dlColor = c;
+	dlColor = light_color;
 }
 void DirectionalLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightcolor){
-	light_ray->position(local.getPos().add(light_ray->dlDir));
-    light_ray->setDir(-dlDir.normalize());
-	light_ray->set_t_max(max());
+	light_ray->setPos(local.getPos().add(light_ray->dir()));
+    dlDir.normalize();
+    light_ray->setDir(-dlDir);
+	light_ray->set_t_max(FLT_MAX);
 	light_ray->set_t_min(0.0);
 	dlColor = lightcolor;
 }
