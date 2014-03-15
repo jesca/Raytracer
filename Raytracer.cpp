@@ -19,10 +19,10 @@ void RayTracer::diffuse(Color kd,Color* color, Color lcolor, Vector3f n, Vector3
     float green = fmax(kd.getG()*(lcolor.getG()*ndotl),0.0f);
     float blue = fmax(kd.getB()*(lcolor.getB()*ndotl),0.0f);
      // color->print();
-    // color->add(Color(red,green,blue));
-    color->setR(red);
-    color->setG(green);
-    color->setB(blue);
+    color->add(Color(red,green,blue));
+    // color->setR(red);
+    // color->setG(green);
+    // color->setB(blue);
    
 }
 
@@ -42,6 +42,9 @@ void RayTracer::specular(Color ks,Color* color, Color lcolor, Vector3f r, Vector
 }
 
 void RayTracer::trace(Ray& ray, int depth, Color* color){
+    color->setR(0);
+    color->setG(0);
+    color->setB(0);
     if(depth > maxDepth){
         //color black
         cout << "maxDepth \n";
@@ -69,12 +72,11 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     //        return;
     if(!p.intersect(ray, &thit, &in)){
         //color black
-        color->setR(0);
-        color->setG(0);
-        color->setB(0);
+        
         return;
         
     } else {
+
         Vector3f normal = in.getLocal().getNormal();
         // cout << normal;
         // Vector3f n = Vector3f(normal[0],normal[1],normal[2]);
