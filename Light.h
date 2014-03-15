@@ -12,8 +12,34 @@
 class Light {
     
 public:
-    void generateLightRay(LocalGeo& local, Ray* lray, Color* lcolor);
+   // virtual void generateLightRay(Intersection& in, Ray* light_ray, Color* light_color){}; // is color pointer or address?
 
 };
 
-#endif /* Light_H */
+class PointLight : public Light{
+public:
+    //color, direction
+	PointLight(){};
+    PointLight(Point position, Vector3f color){
+ //   void generateLightRay(Intersection& in, Ray* light_ray, Color* light_color);
+private:
+	Vector3f color;
+    Point position;
+};
+
+
+
+
+
+class DirectionalLight : public Light{
+public:
+	DirectionalLight(){};
+    generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightcolor){
+  //  void generateLightRay(LocalGeo& local, Ray* light_ray,Color* light_color);
+private:
+	Vector3f position;
+    Vector3f light_direction;
+};
+
+
+#endif
