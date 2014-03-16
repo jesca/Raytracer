@@ -1,5 +1,5 @@
 #include "GeometricPrimitive.h"
-#include "Aggregate.h"
+#include "AggregatePrimitive.h"
 #include "BDRF.h"
 #include <cfloat>
 
@@ -10,10 +10,9 @@ AggregatePrimitive::AggregatePrimitive(vector<GeometricPrimitive*> list){
 
 bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
     bool hit;
-    GeometricPrimitive primhit
+    GeometricPrimitive primhit;
     float thitlast=FLT_MAX;
 	vector<GeometricPrimitive*>::iterator i;
-    int i_size=i.size();
     	//no primitives present
 	if(aprim.empty()){
 		return false;
