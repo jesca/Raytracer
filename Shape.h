@@ -40,7 +40,7 @@ private:
 class Triangle : public Shape
 {
 public:
-    void createTriangle(float centerx,float centery, float radius); //fix later
+     Triangle(Vector3f a,Vector3f b, Vector3f c); //fix later
 	bool intersect(Ray& ray, float* thit, LocalGeo* local);
 	bool intersectP(Ray& ray);
     

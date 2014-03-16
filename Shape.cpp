@@ -80,4 +80,19 @@ bool Sphere::intersect(Ray& ray, float *thit, LocalGeo *local){
 
 
 
+Triangle::Triangle(Vector3f a, Vector3f b, Vector3f c)
+{
+    Vector3f n, p, AtoB, AtoC, AtoP;
 
+   
+}
+
+
+
+
+bool Triangle::intersect(Ray& ray, float* t_hit, LocalGeo* local)
+{
+    }
+
+bool Triangle::intersectP(Ray& ray) {
+}
