@@ -7,7 +7,7 @@ AggregatePrimitive::AggregatePrimitive(vector<Primitive*> list){
 }
 
 bool AggregatePrimitive::intersect(Ray& ray, double* thit, Intersection* in)  {
-	vector<Primitive*>::iterator aggprim;
+	vector<Primitive*>::iterator i;
 	Intersection cur_in, min_in;
     
 	double cur_thit, min_thit = -1;

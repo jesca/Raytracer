@@ -99,8 +99,8 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     Intersection in;
     
     //create directional light
-    Vector3f d1_dir = Vector3f(100,100,-100);
-    Color d1_col=Color(.6,.3,.6);
+    Vector3f d1_dir = Vector3f(100,-100,100);
+    Color d1_col=Color(.3,.3,.6);
     DirectionalLight dlight= DirectionalLight(d1_dir,d1_col);
 
     
