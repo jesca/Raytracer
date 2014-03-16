@@ -15,10 +15,10 @@ class Intersection;
 class Primitive {
     
 public:
-    //    Primitive(){}
+       // Primitive(){};
      virtual bool intersect(Ray& ray, float* thit, Intersection* inter){};
      virtual bool intersectP(Ray& ray){};
-    //    virtual void getBRDF(LocalGeo& local, BRDF* brdf);
+       virtual void getBRDF(LocalGeo& local, BRDF* brdf){};
     
     
 };

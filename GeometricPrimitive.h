@@ -15,6 +15,7 @@
 #include "Material.h"
 #include "Primitive.h"
 #include "Raytracer.h"
+#include "BRDF.h"
 #define Matrix4f Eigen::Matrix4f
 #define Transform Eigen::Transform<float, 4, Eigen::Projective>
 class GeometricPrimitive : public Primitive {
@@ -25,6 +26,10 @@ public:
     bool intersect (Ray& ray, float* thit, Intersection* inter);
     
     bool intersectP(Ray& ray);
+
+    void getBRDF(LocalGeo& g, BRDF* brdf){
+    	material->getBRDF(g, brdf);
+    }
 
 private:
     Transform objToWorld, worldToObj;

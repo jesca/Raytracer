@@ -23,7 +23,7 @@ public:
      }
      bool intersect(Ray& ray, float* thit, Intersection* inter);
      bool intersectP(Ray& ray);
-    //    virtual void getBRDF(LocalGeo& local, BRDF* brdf);
+      void getBRDF(LocalGeo& local, BRDF* brdf);
 private:
 	vector<Primitive*> list;    
 

@@ -89,7 +89,7 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     0,0,1,0,
     0,0,0,1;
     Transform trans(matr);
-    BRDF b = BRDF();
+    BRDF b = BRDF(Color(.6,.8,.6),Color(.6,.3,.6),Color(.2,.0,.1),Color(0,0,0));
     Material testmaterial(b);
 
     GeometricPrimitive p = GeometricPrimitive(&test, trans,&testmaterial);
@@ -122,7 +122,7 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     else {
         //there is an intersection, loop through all the lights
        // Ray lr=Ray(Point(), Vector3f(3), 0, 9999999);
-
+        in.getPrimitive()->getBRDF(in.getLocal(), &brdf);
         Color c=Color(.2,.3,.4);
         dlight.generateLightRay(in.getLocal(), &ray,c);
         
@@ -131,9 +131,9 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         normal.normalize();
 
         Vector3f v = ray.dir(); v.normalize();
-        ambient(Color(.2,.0,.1), color);
-        diffuse(Color(.6,.8,.6), color, normal, ray, c);
-        specular(Color(.6,.3,.6), color, v, normal,70,ray, c);
+        ambient(brdf.getKA(), color);
+        diffuse(brdf.getKD(), color, normal, ray, c);
+        specular(brdf.getKS(), color, v, normal,70,ray, c);
         // *color = Color(1,0,0);
     }
          }
