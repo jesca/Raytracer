@@ -1,4 +1,8 @@
+
+#ifndef AggregatePrimitive_H
+#define AggregatePrimitive_H
 #include "GeometricPrimitive.h"
+#include "BRDF.h"
 #include <stdio.h>
 
 #define vector std::vector
@@ -13,3 +17,4 @@ public:
 private:
 	vector<Primitive*> aprim;
 };
+#endif

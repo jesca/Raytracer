@@ -5,8 +5,8 @@ EIGEN_PATH=/usr/local/include/eigen3
 
 CC=g++
 
-parse: Normal.o Point.o Ray.o Color.o BRDF.o Sample.o LocalGeo.o Camera.o Film.o Material.o Shape.o Intersection.o Light.o Primitive.o GeometricPrimitive.o Aggregate.o RayTracer.o OBJParser.o
-	${CC} -o parse Normal.o Point.o Ray.o Color.o  BRDF.o Sample.o LocalGeo.o Camera.o Film.o Material.o Shape.o Intersection.o Light.o Primitive.o GeometricPrimitive.o Aggregate.o RayTracer.o OBJParser.o
+parse: Normal.o Point.o Ray.o Color.o BRDF.o Sample.o LocalGeo.o Camera.o Film.o Material.o Shape.o Intersection.o Light.o Primitive.o GeometricPrimitive.o AggregatePrimitive.o RayTracer.o OBJParser.o
+	${CC} -o parse Normal.o Point.o Ray.o Color.o  BRDF.o Sample.o LocalGeo.o Camera.o Film.o Material.o Shape.o Intersection.o Light.o Primitive.o GeometricPrimitive.o AggregatePrimitive.o RayTracer.o OBJParser.o
 
 Normal.o: Normal.cpp Normal.h
 	CC -c Normal.cpp -I${EIGEN_PATH}
@@ -53,8 +53,8 @@ Primitive.o: Primitive.cpp Primitive.h
 GeometricPrimitive.o: GeometricPrimitive.cpp GeometricPrimitive.h
 	CC -c GeometricPrimitive.cpp
 
-Aggregate.o: Aggregate.cpp Aggregate.h
-	CC -c Aggregate.cpp
+AggregatePrimitive.o: AggregatePrimitive.cpp AggregatePrimitive.h
+	CC -c AggregatePrimitive.cpp
 
 RayTracer.o: RayTracer.cpp RayTracer.h
 	CC -c RayTracer.cpp -I${EIGEN_PATH} -g

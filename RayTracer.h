@@ -10,7 +10,7 @@
 #include "Intersection.h"
 #include "Primitive.h"
 #include "GeometricPrimitive.h"
-#include "Aggregate.h"
+#include "AggregatePrimitive.h"
 #include "BRDF.h"
 #include "Light.h"
 

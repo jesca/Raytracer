@@ -1,6 +1,6 @@
-#include "GeometricPrimitive.h"
 #include "AggregatePrimitive.h"
-#include "BDRF.h"
+#include "GeometricPrimitive.h"
+
 #include <cfloat>
 
 
