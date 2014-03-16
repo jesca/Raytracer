@@ -21,38 +21,10 @@ int main(int argc, char** args){
     Ray ray(p, v, 1, 100);
     Camera camera(p, width, height);
     
-    Point p1(0,0,0);
-    Vector3f n1(1,0,0);
-    LocalGeo local = LocalGeo(p1, n1);
-    Sphere test(3,-2,7,.5);
-    Sphere test2(0,0,10,.5);
-    
-<<<<<<< HEAD
-    Matrix4f matr;
-    matr <<
-    1,0,0,0,
-    0,1,0,0,
-    0,0,1,0,
-    0,0,0,1;
-    Transform trans(matr);
-    BRDF b = BRDF();
-    Material testmaterial(b);
-
-    Primitive pr = GeometricPrimitive(&test, trans,&testmaterial);
-    Primitive p2 = GeometricPrimitive(&test2, trans,&testmaterial);
-    vector<Primitive*> geoprimlist(2);
-    geoprimlist.at(0)=&pr; geoprimlist.at(1)=&p2;
-    Primitive prim = AggregatePrimitive (geoprimlist);
-    // Intersection in;
-
-    RayTracer rayTracer(&prim);
-    
-
-
-=======
+    RayTracer rayTracer;
     
     
->>>>>>> babd30adbfcd674fa30d8bcf44f1f77c84e26ab0
+    
     //temporary for testing
     for(int j=0; j<height; j++){
         for(int i=0; i<width; i++){

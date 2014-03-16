@@ -2,19 +2,31 @@
 #ifndef Aggregate_H
 #define Aggregate_H
 
+//#include <cstdlib>
+#include <iostream>
+#include <math.h>
+#include <vector>
+#include <cfloat>
+#include "LocalGeo.h"
+#include "Ray.h"
+#include "BRDF.h"
+#include "Intersection.h"
 #include "Primitive.h"
-#include <stdio.h>
-
 #define vector std::vector
 
-class AggregatePrimitive
-{
+
+class AggregatePrimitive : public Primitive {
+    
 public:
-	AggregatePrimitive(vector<Primitive*> list);
-	bool intersect(Ray& ray, double* thit, Intersection* in);
-	bool intersectP(Ray& ray);
-	void getBDRF(LocalGeo& local, BDRF* BDRF);
+     AggregatePrimitive(vector<Primitive*> l){
+     	list = l;
+     }
+     bool intersect(Ray& ray, float* thit, Intersection* inter);
+     bool intersectP(Ray& ray);
+    //    virtual void getBRDF(LocalGeo& local, BRDF* brdf);
 private:
-	vector<Primitive*> aprim;
+	vector<Primitive*> list;    
+
 };
-#endif 
+
+#endif /* Aggregate_H */

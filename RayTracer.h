@@ -10,18 +10,16 @@
 #include "Intersection.h"
 #include "Primitive.h"
 #include "GeometricPrimitive.h"
-#include "AggregatePrimitive.h"
+#include "Aggregate.h"
 #include "BRDF.h"
 #include "Light.h"
-<<<<<<< HEAD
-=======
 
->>>>>>> babd30adbfcd674fa30d8bcf44f1f77c84e26ab0
 #include "Shape.h"
 #define Vector3f Eigen::Vector3f
 
 class RayTracer {
 public:
+    RayTracer();
     RayTracer(Primitive* p){
         primitive = p;
         maxDepth = 10;
@@ -30,8 +28,8 @@ public:
     void trace(Ray& ray, int depth, Color* color);
 private:
     void ambient(Color ka, Color* color);
-    void diffuse(Color kd,Color* color, Vector3f n, Light l);
-    void specular(Color ks,Color* color, Vector3f view, Vector3f normal,float p, Light l);
+    void diffuse(Color kd,Color* color, Vector3f n, Ray genray, Color lcolor);
+    void specular(Color ks,Color* color, Vector3f view, Vector3f normal,float p, Ray genray, Color lcolor);
     int maxDepth;
     int numLights;
     PointLight pl;
