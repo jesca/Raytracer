@@ -32,7 +32,7 @@ DirectionalLight::DirectionalLight(Vector3f direction, Color light_color) {
 }
 void DirectionalLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color&  lightcolor){
     Point localpos = local.getPos();
-    localpos.add(light_ray->dir());
+    localpos.add(.2*light_ray->dir());
 	light_ray->setPos(localpos);
     
     dir.normalize();

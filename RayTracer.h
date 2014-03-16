@@ -22,8 +22,8 @@ public:
     void trace(Ray& ray, int depth, Color* color);
 private:
     void ambient(Color ka, Color* color);
-    void diffuse(Color kd,Color* color, Vector3f n, Light l);
-    void specular(Color ks,Color* color, Vector3f view, Vector3f normal,float p, Light l);
+    void diffuse(Color kd,Color* color, Vector3f n, Ray genray, Color lcolor);
+    void specular(Color ks,Color* color, Vector3f view, Vector3f normal,float p, Ray genray, Color lcolor);
     int maxDepth;
     int numLights;
     PointLight pl;
