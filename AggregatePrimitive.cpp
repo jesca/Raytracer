@@ -1,5 +1,5 @@
 #include "GeometricPrimitive.h"
-#include "Aggregate.h"
+#include "AggregatePrimitive.h"
 #include "BDRF.h"
 #include <cfloat>
 
