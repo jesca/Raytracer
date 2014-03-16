@@ -35,7 +35,7 @@ private:
     PointLight pl;
     BRDF brdf;
     float thit;
-    Intersection* in;
+    Intersection in;
     Primitive* primitive;
     
 };

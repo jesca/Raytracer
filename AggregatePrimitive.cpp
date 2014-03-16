@@ -7,7 +7,8 @@
 AggregatePrimitive::AggregatePrimitive(vector<Primitive*> list){
     for (vector<Primitive*>::iterator i = list.begin(); i != list.end(); i++) {
         aprim.push_back(*i);
-    }}
+    }
+}
 
 
 
@@ -19,6 +20,7 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
 	vector<Primitive*>::iterator i;
     	//no primitives present
 	if(aprim.empty()){
+
 		return false;
 	}
     
@@ -33,9 +35,12 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
         }
     }
 	if(!hit){
+
+
 		return false;
 	}
 	else{
+
 		*thit = thitlast;
 		in->setPrimitive(primhit);
 		return true;

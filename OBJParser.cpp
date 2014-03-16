@@ -1,6 +1,7 @@
 #include "OBJParser.h"
 #include "Eigen/Dense"
 #include "Camera.h"
+#include <cassert>
 #define Vector3f Eigen::Vector3f
 #define cout std::cout
 
@@ -21,8 +22,39 @@ int main(int argc, char** args){
     Ray ray(p, v, 1, 100);
     Camera camera(p, width, height);
     
-    RayTracer rayTracer;
     
+    Point p1(0,0,0);
+    Vector3f n1(1,0,0);
+    LocalGeo local = LocalGeo(p1, n1);
+    Sphere test(3,-2,7,.5);
+    Sphere test2(0,0,8,1);
+    
+    Matrix4f matr;
+    matr <<
+    1,0,0,0,
+    0,1,0,0,
+    0,0,1,0,
+    0,0,0,1;
+    Transform trans(matr);
+    BRDF b = BRDF(Color(.6,.6,.6),Color(.4,.6,.8),Color(.0,.1,.1),Color(0,0,0));
+    BRDF b2 = BRDF(Color(.6,.3,.4),Color(.6,.3,.6),Color(.2,.0,.1),Color(0,0,0));
+    Material testmaterial(b);
+    Material testmaterial2(b2);
+
+    GeometricPrimitive pr = GeometricPrimitive(&test, trans,&testmaterial);
+    GeometricPrimitive p2 = GeometricPrimitive(&test2, trans,&testmaterial2);
+    vector<Primitive*> geoprimlist(2);
+    geoprimlist.at(0)=&pr; geoprimlist.at(1)=&p2;
+    AggregatePrimitive aprim = AggregatePrimitive(geoprimlist);
+    RayTracer rayTracer(&aprim);
+
+
+    
+    
+    //create specular light
+    Color p1_color = Color(.6,.7,.6);
+    Vector3f p1_l = Vector3f(-100,-100,100);
+    PointLight plight = PointLight(p1_l,p1_color);
     
     
     //temporary for testing

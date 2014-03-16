@@ -2,12 +2,14 @@
 #ifndef AggregatePrimitive_H
 #define AggregatePrimitive_H
 #include "GeometricPrimitive.h"
+#include "Primitive.h"
+
 #include "BRDF.h"
 #include <stdio.h>
 
 #define vector std::vector
 
-class AggregatePrimitive
+class AggregatePrimitive : public Primitive
 {
 public:
 	AggregatePrimitive(vector<Primitive*> list);
