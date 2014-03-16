@@ -20,7 +20,7 @@ public:
     //color, direction
 	PointLight(){};
     PointLight(Point position, Vector3f light_color);
-    void generateLightRay(LocalGeo& local, Ray* light_ray, Color* light_color);
+    void generateLightRay(LocalGeo& local, Ray* light_ray, Vector3f light_color);
 private:
 	Vector3f plColor;
     Point plPos;
