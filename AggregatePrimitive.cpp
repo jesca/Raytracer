@@ -20,7 +20,7 @@ bool AggregatePrimitive::intersect(Ray& ray, double* thit, Intersection* in)  {
     
     for (vector<Primitive*>::iterator i = 0; i != i_size-1; i++) {
         if((*i)->intersect(ray, thit, in)) {
-            if (*thit < thit_min) {
+            if (*thit < thitlast) {
                 hit = true;
                 thit_min = *thit;
                 primhit = *i;
