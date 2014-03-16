@@ -1,22 +1,48 @@
-#include "AggregatePrimitive.h"
+#include "Primitive.h"
+#include "Aggregrate.h"
 
-bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* inter){
-	float t = FLT_MAX;
-	float t2 = FLT_MAX;
-	thit = &t;
-	float* ttemp = &t2;
-	Primitive* primitive;
-	for (int i=0; i<list.size(); i++){
-		list.at(i)->intersect(ray, ttemp, inter);
-		if (*ttemp < *thit) {
-			thit = ttemp;
-			primitive = list.at(i);
-		}
-	}
-	return primitive->intersect(ray, thit, inter);
+
+AggregatePrimitive::AggregatePrimitive(vector<Primitive*> list){
+	aprim = list;
 }
 
-bool AggregatePrimitive::intersectP(Ray& ray){
+bool AggregatePrimitive::intersect(Ray& ray, double* thit, Intersection* in)  {
+    bool hit;
+    Primitive primhit
+    float thitlast=FLT_MAX;
+	vector<Primitive*>::iterator i;
+    int i_size=i.size();
+    	//no primitives present
+	if(aprim.empty()){
+		return false;
+	}
+    
+    
+    for (vector<Primitive*>::iterator i = 0; i != i_size-1; i++) {
+        if((*i)->intersect(ray, thit, in)) {
+            if (*thit < thit_min) {
+                hit = true;
+                thit_min = *thit;
+                primhit = *i;
+            }
+        }
+    }
+	if(!hit){
+		return false;
+	}
+	else{
+		*thit = thitlast;
+		*in = min_in;
+		return true;
+	}
+}
 
-	return false;
+for (vector<Primitive*>::iterator i = 0; i != i_size-1; i++) {
+    if((*i)->intersect(ray)) {
+        return true;
+    }
+}
+return false;
+void AggregatePrimitive::getBDRF(LocalGeo& local, BDRF* BDRF) {
+	exit(1);
 }
