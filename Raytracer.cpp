@@ -52,7 +52,7 @@ void RayTracer::specular(Color ks,Color* color, Vector3f view, Vector3f normal,f
     Vector3f pos = Vector3f(pospoint.getX(),pospoint.getY(),pospoint.getZ());
     pos.normalize();
     float Ldotn = pos.dot(normal);
-    Vector3f r = -pos + 2*Ldotn*normal;
+    Vector3f r = pos - 2*Ldotn*normal;
     Vector3f rhat = r;
     Vector3f vhat = view;
     rhat.normalize();
