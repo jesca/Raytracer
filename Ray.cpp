@@ -11,6 +11,7 @@
     Point Ray::pos() {
         return position;
     }
+
 //    Vector3f Ray::posvec() {
 //        return posvec;
 //    }

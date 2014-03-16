@@ -22,7 +22,7 @@ public:
     float t_max(void);
     void set_t_min(float t){t_minimum=t;}
     void set_t_max(float t){t_maximum=t;}
-
+ 
 private:
     Point position;
     Vector3f direction;

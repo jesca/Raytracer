@@ -16,7 +16,11 @@ void RayTracer::ambient(Color ka, Color* color){
 
 }
 
+<<<<<<< HEAD
 
+=======
+/*
+>>>>>>> babd30adbfcd674fa30d8bcf44f1f77c84e26ab0
 
 void RayTracer::diffuse(Color kd,Color* color, Vector3f n, DirectionalLight dlight){
     Vector3f nhat = n;
@@ -31,10 +35,31 @@ void RayTracer::diffuse(Color kd,Color* color, Vector3f n, DirectionalLight dlig
     color->add(Color(red,green,blue));
 
    
+}*/
+
+void RayTracer::diffuse(Color kd,Color* color, Vector3f n, Light light){
+    Vector3f nhat = n;
+    Vector3f lhat = light.getDir();
+    Color lcolor=light.getColor();
+    nhat.normalize();
+    lhat.normalize();
+    float ndotl = fmax(nhat.dot(lhat),0.0f);
+    float red = kd.getR()*(lcolor.getR()*ndotl);
+    float green =kd.getG()*(lcolor.getG()*ndotl);
+    float blue = kd.getB()*(lcolor.getB()*ndotl);
+    color->add(Color(red,green,blue));
+    
+    
 }
 
+<<<<<<< HEAD
 void RayTracer::specular(Color ks,Color* color, Vector3f view, Vector3f normal,float p, PointLight pl){
     Vector3f pos = pl.getPos();
+=======
+
+void RayTracer::specular(Color ks,Color* color, Vector3f view, Vector3f normal,float p, Light light){
+    Vector3f pos = light.getPos();
+>>>>>>> babd30adbfcd674fa30d8bcf44f1f77c84e26ab0
     pos.normalize();
     float Ldotn = pos.dot(normal);
     Vector3f r = -pos + 2*Ldotn*normal;
@@ -43,7 +68,11 @@ void RayTracer::specular(Color ks,Color* color, Vector3f view, Vector3f normal,f
     rhat.normalize();
     vhat.normalize();
     float rdotv = pow(fmax(rhat.dot(vhat),0.0f),p);
+<<<<<<< HEAD
     Color lcolor=pl.getColor();
+=======
+    Color lcolor=light.getColor();
+>>>>>>> babd30adbfcd674fa30d8bcf44f1f77c84e26ab0
     float red = ks.getR()*(lcolor.getR()*rdotv);
     float green = ks.getG()*(lcolor.getG()*rdotv);
     float blue = ks.getB()*(lcolor.getB()*rdotv);
@@ -125,4 +154,9 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     }
          }
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> babd30adbfcd674fa30d8bcf44f1f77c84e26ab0
     

@@ -13,6 +13,10 @@
 #include "AggregatePrimitive.h"
 #include "BRDF.h"
 #include "Light.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> babd30adbfcd674fa30d8bcf44f1f77c84e26ab0
 #include "Shape.h"
 #define Vector3f Eigen::Vector3f
 
@@ -26,8 +30,8 @@ public:
     void trace(Ray& ray, int depth, Color* color);
 private:
     void ambient(Color ka, Color* color);
-    void diffuse(Color kd,Color* color, Color lcolor, Vector3f n, Vector3f l);
-    void specular(Color ks,Color* color, Color lcolor, Vector3f r, Vector3f v, float p);
+    void diffuse(Color kd,Color* color, Vector3f n, Light l);
+    void specular(Color ks,Color* color, Vector3f view, Vector3f normal,float p, Light l);
     int maxDepth;
     int numLights;
     PointLight pl;

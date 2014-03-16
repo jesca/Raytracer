@@ -27,6 +27,7 @@ int main(int argc, char** args){
     Sphere test(3,-2,7,.5);
     Sphere test2(0,0,10,.5);
     
+<<<<<<< HEAD
     Matrix4f matr;
     matr <<
     1,0,0,0,
@@ -48,6 +49,10 @@ int main(int argc, char** args){
     
 
 
+=======
+    
+    
+>>>>>>> babd30adbfcd674fa30d8bcf44f1f77c84e26ab0
     //temporary for testing
     for(int j=0; j<height; j++){
         for(int i=0; i<width; i++){
