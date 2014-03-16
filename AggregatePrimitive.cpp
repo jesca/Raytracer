@@ -1,16 +1,20 @@
 #include "GeometricPrimitive.h"
-#include "AggregatePrimitive.h"
+#include "Aggregate.h"
 #include "BDRF.h"
 #include <cfloat>
 
 
 AggregatePrimitive::AggregatePrimitive(vector<Primitive*> list){
-	aprim = list;
-}
+    for (vector<Primitive*>::iterator i = list.begin(); i != list.end(); i++) {
+        aprim.push_back(*i);
+    }}
+
+
+
 
 bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
     bool hit;
-    Primitive primhit;
+    Primitive* primhit;
     float thitlast=FLT_MAX;
 	vector<Primitive*>::iterator i;
     	//no primitives present
@@ -33,7 +37,7 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
 	}
 	else{
 		*thit = thitlast;
-		in->setPrimitive(*primhit);
+		in->setPrimitive(primhit);
 		return true;
 	}
 }
