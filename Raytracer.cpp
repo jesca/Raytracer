@@ -16,6 +16,8 @@ void RayTracer::ambient(Color ka, Color* color){
 
 }
 
+
+
 void RayTracer::diffuse(Color kd,Color* color, Vector3f n, DirectionalLight dlight){
     Vector3f nhat = n;
     Vector3f lhat = dlight.getDir();
@@ -64,7 +66,7 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     Vector3f n1(1,0,0);
     LocalGeo local = LocalGeo(p1, n1);
     Sphere test(3,-2,7,.5);
-    Sphere test2(0,0,10,.5);
+    Sphere test2(0,0,8,.5);
     
     Matrix4f matr;
     matr <<
@@ -94,12 +96,23 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     PointLight plight = PointLight(p1_l,p1_color);
 
 
-    if (!p.intersect(ray, &thit, &in)){
-        //color black
-    }
+         for(int i=0; i<2; i++){
+             cout << i;
+             
+              if(!geoprimlist.at(i)->intersect(ray, &thit, &in)){
+                  color->setR(0);
+                  color->setB(0);
+                  color->setG(0);
+              }
+         
+    
     else {
         //there is an intersection, loop through all the lights
-        dlight.generateLightRay(LocalGeo& in, Ray* light_ray, Color* light_color)
+        Ray lr=Ray(Point(), Vector3f(3), 0, 9999999);
+
+        Color c=Color(1,0,1);
+        dlight.generateLightRay(in.getLocal(), &lr,c);
+        
         
         Vector3f normal = in.getLocal().getNormal();
         normal.normalize();
@@ -107,10 +120,11 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         Vector3f v = ray.dir(); v.normalize();
         ambient(Color(.1,.0,.1), color);
         diffuse(Color(.6,.3,.6), color, normal, dlight);
-        specular(Color(.6,.7,.6), color, v,normal,40,plight);
+        specular(Color(.6,.3,.6), color, v, normal,30,plight);
         // *color = Color(1,0,0);
-    }    
-    }    
-    
-    
+    }
+         }
+}
+
+
     
