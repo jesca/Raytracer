@@ -24,7 +24,7 @@ public:
 
     bool intersect (Ray& ray, float* thit, Intersection* inter);
     
-    bool intersect(Ray& ray);
+    bool intersectP(Ray& ray);
 
 private:
     Transform objToWorld, worldToObj;

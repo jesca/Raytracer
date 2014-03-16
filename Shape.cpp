@@ -8,7 +8,7 @@ Sphere::Sphere(float centerx, float centery, float centerz,float radius){
 
 
 
-bool Sphere::intersect(Ray &ray){
+bool Sphere::intersectP(Ray &ray){
     float a, b, c,t1, t2, discriminant;
     Vector3f dir = ray.dir();
     Vector3f e_minus_c = ray.pos().sub(center);

@@ -17,6 +17,10 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* inter){
 }
 
 bool AggregatePrimitive::intersectP(Ray& ray){
-
+	for (int i=0; i<list.size(); i++){
+		if(list.at(i)->intersectP(ray)){
+			return true;
+		}
+	}
 	return false;
 }

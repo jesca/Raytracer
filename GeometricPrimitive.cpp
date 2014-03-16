@@ -24,9 +24,9 @@ bool GeometricPrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
     return true;
 }
 
-bool GeometricPrimitive::intersect(Ray& ray) {
+bool GeometricPrimitive::intersectP(Ray& ray) {
 //    Ray oray = worldToObj.mul(ray);
-    return shape->intersect(ray);
+    return shape->intersectP(ray);
 }
 
  

@@ -13,7 +13,7 @@ class Shape
 {
 public:
     virtual bool intersect(Ray& ray, float* thit, LocalGeo* local){};
-    virtual bool intersect(Ray& ray){};
+    virtual bool intersectP(Ray& ray){};
     
 
  
@@ -26,7 +26,7 @@ class Sphere : public Shape
 public:
     Sphere(float centerx,float centery,float centerz, float radius);
     bool intersect(Ray& ray, float* thit, LocalGeo* local);
-     bool intersect(Ray& ray);
+     bool intersectP(Ray& ray);
 
 
 
