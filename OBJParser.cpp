@@ -23,6 +23,8 @@ int main(int argc, char** args){
     
     RayTracer rayTracer;
     
+    
+    
     //temporary for testing
     for(int j=0; j<height; j++){
         for(int i=0; i<width; i++){

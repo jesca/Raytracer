@@ -1,37 +1,43 @@
 #include "light.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <limits>
-std::numeric_limits<float>::max();
+#include <cfloat>
 
 
-
-PointLight::PointLight(Point position, Vector3f color){
+PointLight::PointLight(Vector3f position, Color light_color){
 	plPos = position;
-	plColor = color;
+	plColor = light_color;
 }
 
-void PointLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightcolor){
+void PointLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color&  lightcolor){
     //light pos - localpos
-	Vector3f subpos = plPos.sub(local.getPos());
+    Point lp = local.getPos();
+	Vector3f subpos = Vector3f(plPos[0]-lp.getX(),plPos[1]-lp.getY(), plPos[2]-lp.getZ());
 	subpos.normalize();
-	light_ray->setPos(local.getPos().add(subpos));
+    lp.add(subpos);
+	light_ray->setPos(lp);
 	light_ray->setDir(subpos);
     //tmax is the length of subpos
 	//light_ray->t_max = sqrt(subpos[0]*suppos[0] + subpos[1]*subpos[1] + subpos[2]*subpos[2]); // maybe use norm??
-    light_ray->set_t_max(plPos.sub(local.getPos)).norm();
+    Vector3f tm = Vector3f(plPos[0]-lp.getX(),plPos[1]-lp.getY(), plPos[2]-lp.getZ());
+    
+    light_ray->set_t_max(tm.norm());
 	light_ray->set_t_min(0.0);
 	plColor = lightcolor;
 }
 
-DirectionalLight::DirectionalLight(Vector3f direction, Vector3f light_color) {
+DirectionalLight::DirectionalLight(Vector3f direction, Color light_color) {
 	dlDir = direction;
-	dlColor = c;
+	dlColor = light_color;
 }
-void DirectionalLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color* lightcolor){
-	light_ray->position(local.getPos().add(light_ray->dlDir));
-    light_ray->setDir(-dlDir.normalize());
-	light_ray->set_t_max(max());
+void DirectionalLight::generateLightRay(LocalGeo& local, Ray* light_ray, Color&  lightcolor){
+    Point localpos = local.getPos();
+    localpos.add(light_ray->dir());
+	light_ray->setPos(localpos);
+    
+    dlDir.normalize();
+    light_ray->setDir(-dlDir);
+	light_ray->set_t_max(FLT_MAX);
 	light_ray->set_t_min(0.0);
 	dlColor = lightcolor;
 }

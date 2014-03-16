@@ -5,8 +5,8 @@ EIGEN_PATH=/usr/local/include/eigen3
 
 CC=g++
 
-parse: Normal.o Point.o Ray.o Color.o BRDF.o Sample.o LocalGeo.o Camera.o Film.o Material.o Shape.o Intersection.o PointLight.o Primitive.o GeometricPrimitive.o RayTracer.o OBJParser.o
-	${CC} -o parse Normal.o Point.o Ray.o Color.o  BRDF.o Sample.o LocalGeo.o Camera.o Film.o Material.o Shape.o Intersection.o PointLight.o Primitive.o GeometricPrimitive.o RayTracer.o OBJParser.o
+parse: RayTracer.o  Point.o Ray.o Color.o BRDF.o Sample.o LocalGeo.o Camera.o Film.o Material.o Shape.o Intersection.o  Primitive.o GeometricPrimitive.o  OBJParser.o Light.o Normal.o
+	${CC} -o parse Normal.o Point.o Ray.o Color.o  BRDF.o Sample.o LocalGeo.o Camera.o Film.o Material.o Shape.o Intersection.o  Primitive.o GeometricPrimitive.o RayTracer.o OBJParser.o Light.o
 
 Normal.o: Normal.cpp Normal.h
 	CC -c Normal.cpp -I${EIGEN_PATH}
@@ -43,9 +43,10 @@ Shape.o: Shape.cpp Shape.h
 
 Intersection.o: Intersection.cpp Intersection.h
 	CC -c Intersection.cpp -I${EIGEN_PATH}
+ 
 
-PointLight.o: PointLight.cpp PointLight.h Light.h
-	CC -c PointLight.cpp -I${EIGEN_PATH}
+Light: Light.cpp Light.h
+	CC -c Light.cpp -I${EIGEN_PATH}
 
 Primitive.o: Primitive.cpp Primitive.h
 	CC -c Primitive.cpp
