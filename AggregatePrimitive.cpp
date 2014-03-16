@@ -1,25 +1,25 @@
 #include "GeometricPrimitive.h"
-#include "AggregatePrimitive.h"
+#include "Aggregate.h"
 #include "BDRF.h"
 #include <cfloat>
 
 
-AggregatePrimitive::AggregatePrimitive(vector<GeometricPrimitive*> list){
+AggregatePrimitive::AggregatePrimitive(vector<Primitive*> list){
 	aprim = list;
 }
 
 bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
     bool hit;
-    GeometricPrimitive primhit;
+    Primitive primhit;
     float thitlast=FLT_MAX;
-	vector<GeometricPrimitive*>::iterator i;
+	vector<Primitive*>::iterator i;
     	//no primitives present
 	if(aprim.empty()){
 		return false;
 	}
     
     
-    for (vector<GeometricPrimitive*>::iterator i =aprim.begin(); i != aprim.end(); i++) {
+    for (vector<Primitive*>::iterator i =aprim.begin(); i != aprim.end(); i++) {
         if((*i)->intersect(ray, thit, in)) {
             if (*thit < thitlast) {
                 hit = true;
@@ -33,7 +33,7 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
 	}
 	else{
 		*thit = thitlast;
-		*in = primhit;
+		in->setPrimitive(*primhit);
 		return true;
 	}
 }
@@ -44,8 +44,8 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in)  {
 
 bool AggregatePrimitive::intersectP(Ray &ray)
 {
-for (vector<GeometricPrimitive*>::iterator i =aprim.begin(); i != aprim.end(); i++) {
-    if((*i)->intersect(ray)) {
+for (vector<Primitive*>::iterator i =aprim.begin(); i != aprim.end(); i++) {
+    if((*i)->intersectP(ray)) {
         return true;
     }
 }
