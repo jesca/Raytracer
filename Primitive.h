@@ -16,8 +16,8 @@ class Primitive {
     
 public:
     //    Primitive(){}
-     bool intersect(Ray& ray, float* thit, Intersection* inter);
-     bool intersectP(Ray& ray);
+     virtual bool intersect(Ray& ray, float* thit, Intersection* inter){};
+     virtual bool intersectP(Ray& ray){};
     //    virtual void getBRDF(LocalGeo& local, BRDF* brdf);
     
     

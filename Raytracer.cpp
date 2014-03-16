@@ -4,12 +4,12 @@
 #define Transform Eigen::Transform<float, 4, Eigen::Projective>
 #define vector std::vector
 
-RayTracer::RayTracer(){
-    maxDepth = 10;
-    numLights = 1;
-    thit = 0;
-    PointLight pl;
-}
+// RayTracer::RayTracer(){
+//     maxDepth = 10;
+//     numLights = 1;
+//     thit = 0;
+//     PointLight pl;
+// }
 void RayTracer::ambient(Color ka, Color* color){
     color->add(ka);
 
@@ -56,54 +56,40 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         cout << "maxDepth \n";
         return;
     }
-    Point p1(0,0,0);
-    Vector3f n1(1,0,0);
-    LocalGeo local = LocalGeo(p1, n1);
-    Sphere test(3,-2,7,.5);
-    Sphere test2(0,0,10,.5);
     
-    Matrix4f matr;
-    matr <<
-    1,0,0,0,
-    0,1,0,0,
-    0,0,1,0,
-    0,0,0,1;
-    Transform trans(matr);
-    BRDF b = BRDF();
-    Material testmaterial(b);
-
-    GeometricPrimitive p = GeometricPrimitive(&test, trans,&testmaterial);
-    GeometricPrimitive p2 = GeometricPrimitive(&test2, trans,&testmaterial);
-    vector<GeometricPrimitive*> geoprimlist(2);
-    geoprimlist.at(0)=&p; geoprimlist.at(1)=&p2;
-    Intersection in;
     //    if(in->getPrimitive()->intersect())
     //        cout << "light blocked \n";
     //        *color = Color(0,0,0);
     //        return;
-    for(int i=0; i<2; i++){
-    if(!geoprimlist.at(i)->intersect(ray, &thit, &in)){
-        //color black
-        
-        
-        
-    } else {
-        Vector3f normal = in.getLocal().getNormal();
-        // cout << normal;
-        // Vector3f n = Vector3f(normal[0],normal[1],normal[2]);
-        
-        ambient(Color(.1,.0,.1), color);
-        Vector3f l(100,100,-100);
-        diffuse(Color(.6,.3,.6), color, Color(.6,.3,.6), normal, l);
-        Vector3f L(-100,-100,100);
-        L.normalize(); normal.normalize();
-        float Ldotn = L.dot(normal);
-        Vector3f r = -L + 2*Ldotn*normal;
-        Vector3f v = ray.dir(); v.normalize();
-        specular(Color(.6,.7,.6), color, Color(.6,.7,.6), r, v, 40);
-        // *color = Color(1,0,0);
-    }    
-    }    
+    
+        if(!primitive->intersect(ray, &thit, in)){
+            //color black
+            return;
+        } else {
+            
+            
+            Vector3f normal = in->getLocal().getNormal();
+            Vector3f l(100,100,-100);
+            Vector3f L(-100,-100,100);
+            // Ray lray(in->getLocal().getPos(),Vector3f(-100,-100,100), 0, 1000);
+            // for(int j=0; j<2; j++){
+            //     if (geoprimlist.at(i)->intersectP(lray) && i!=j){
+            //         printf("here\n");
+            //         return;
+            //     }
+            // }
+                ambient(Color(.1,.0,.1), color);
+                diffuse(Color(.6,.3,.6), color, Color(.6,.3,.6), normal, l);
+                L.normalize(); normal.normalize();
+                float Ldotn = L.dot(normal);
+                Vector3f r = -L + 2*Ldotn*normal;
+                Vector3f v = ray.dir(); v.normalize();
+                specular(Color(.6,.7,.6), color, Color(.6,.7,.6), r, v, 40);
+                // *color = Color(1,0,0);
+        }    
+                   
+         
+    
     
     
     
