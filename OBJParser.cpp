@@ -39,6 +39,7 @@ bool parseLine(string line){
     } else if (op.compare("v")==0){
         float x,y,z;
         ss >>x >>y >>z;
+
         points.push_back(Point(x,y,z));
     } else if (op.compare("f")==0){
         int i,j,k;
@@ -81,7 +82,11 @@ void parseScene(string filename){
 
 
 int main(int argc, char** args){
-    parseScene("test.obj");
+    if (argc>1){
+        for (int i=1; i<argc;i++){
+            parseScene(args[i]);
+        }
+    }
     Film film (width, height);
     Color color(0,0,0);
     Sample s1(0,0);
