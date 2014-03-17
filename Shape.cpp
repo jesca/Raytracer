@@ -19,7 +19,7 @@ bool Sphere::intersectP(Ray &ray){
     
     discriminant = pow(b,2.0)-(4*a*c);
     
-	if(discriminant < 0){
+	if(discriminant <= 0){
 		return false;
 	}
 	else{
@@ -27,12 +27,12 @@ bool Sphere::intersectP(Ray &ray){
 		t1 = (-b/2.0 + sqrtdisc) / a;
 		t2 = (-b/2.0 - sqrtdisc) / a;
         
-		if((t1 > ray.t_min() && t1 < ray.t_max()) ||
-           (t2 > ray.t_min() && t2 < ray.t_max())){
-			return true;
+		if((t1 < ray.t_min() || t1 > ray.t_max()) ||
+           (t2 < ray.t_min() || t2 > ray.t_max())){
+			return false;
 		}
 		else{
-			return false;
+			return true;
 		}
 	}
 }
@@ -101,7 +101,7 @@ Triangle::Triangle(Point a, Point b, Point c)
 
 
 
-bool Triangle::intersect(Ray& ray, float* t_hit, LocalGeo* local)
+bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
 
 {
     //normal dot ray direction
@@ -148,6 +148,17 @@ bool Triangle::intersect(Ray& ray, float* t_hit, LocalGeo* local)
 
     
     //update stuff here...soon.
+    thit = &t;
+    local->setPos(phit);
+    Vector3f norm = v1p.cross(v2p);
+    /*Nx=(Vy∗Wz)−(Vz∗Wy)
+    Ny=(Vz∗Wx)−(Vx∗Wz)
+    Nz=(Vx∗Wy)−(Vy∗Wx)
+    */
+    /*Ax=Nx/(Nx+Ny+Nz)
+    Ay=Ny/(Nx+Ny+Nz)
+    Az=Nz/(Nx+Ny+Nz)......vector (ax, ay, az)*/
+    local->setNormal(norm);
 }
 
 bool Triangle::intersectP(Ray& ray) {

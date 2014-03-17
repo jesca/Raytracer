@@ -93,17 +93,19 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
 
         //there is an intersection, loop through all the lights
        // Ray lr=Ray(Point(), Vector3f(3), 0, 9999999);
-        Ray lray;
+        // Ray lray;
         in.getPrimitive()->getBRDF(in.getLocal(), &brdf);
         Color c=Color(.2,.3,.4);
+        Ray lray;
         dlight.generateLightRay(in.getLocal(), &lray,c);
+        ambient(brdf.getKA(), color);
         
         if(!primitive->intersectP(lray)){
         Vector3f normal = in.getLocal().getNormal();
         normal.normalize();
 
-        Vector3f v = ray.dir(); v.normalize();
-        ambient(brdf.getKA(), color);
+        Vector3f v = lray.dir(); v.normalize();
+        
         diffuse(brdf.getKD(), color, normal, lray, c);
         specular(brdf.getKS(), color, v, normal,70,lray, c);
         // *color = Color(1,0,0);
