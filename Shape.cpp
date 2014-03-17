@@ -1,7 +1,6 @@
 #include "Shape.h"
 
 Sphere::Sphere(float centerx, float centery, float centerz,float radius){
-    cout << "shere creation";
     this->radius=radius;
     this->center=Point(centerx,centery,centerz);
 }
@@ -122,9 +121,9 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
     float pyminpos = p1v[1] - raypos[1];
     float pzminpos = p1v[2] - raypos[2];
     
-    float prodmin1 = sub5*dirvec[3] - dirvec[2]*sub6;
+    float prodmin1 = sub5*dirvec[2] - dirvec[1]*sub6;
     float prodmin2 = dirvec[0]*sub6 - sub4*dirvec[2];
-    float prodmin3 = sub4*dirvec[3] - sub5*dirvec[1];
+    float prodmin3 = sub4*dirvec[1] - sub5*dirvec[0];
     float prodmin4 = sub1*pyminpos - pxminpos*sub2;
     float prodmin5 = pxminpos*sub3 - sub1*pzminpos;
     float prodmin6 = sub2*pzminpos - pyminpos*sub3;
@@ -143,7 +142,7 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
     beta = ((pxminpos*prodmin1) + (pyminpos*prodmin2) + (pzminpos*prodmin3))/mult ;
     gamma = ((dirvec[2]*prodmin4) + (dirvec[1]*prodmin5) + (dirvec[0]*prodmin6))/mult;
     alpha = 1 - beta - gamma;
-    if (gamma < 0 || gamma > 1 || (beta<0 || beta> (1-gamma))) {    cout <<"f";
+    if (gamma < 0 || gamma > 1 || (beta<0 || beta> (1-gamma))) {
 
          return false;
 
@@ -160,8 +159,7 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
         local->setNormal(sn);
  
     }
-    cout <<"true";
-    return true;
+     return true;
     
     
      }
@@ -187,9 +185,9 @@ bool Triangle::intersectP(Ray& ray) {
     float pyminpos = p1v[1] - raypos[1];
     float pzminpos = p1v[2] - raypos[2];
     
-    float prodmin1 = sub5*dirvec[3] - dirvec[2]*sub6;
+    loat prodmin1 = sub5*dirvec[2] - dirvec[1]*sub6;
     float prodmin2 = dirvec[0]*sub6 - sub4*dirvec[2];
-    float prodmin3 = sub4*dirvec[3] - sub5*dirvec[1];
+    float prodmin3 = sub4*dirvec[1] - sub5*dirvec[0];
     float prodmin4 = sub1*pyminpos - pxminpos*sub2;
     float prodmin5 = pxminpos*sub3 - sub1*pzminpos;
     float prodmin6 = sub2*pzminpos - pyminpos*sub3;
