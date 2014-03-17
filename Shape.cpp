@@ -1,7 +1,7 @@
 #include "Shape.h"
 
 Sphere::Sphere(float centerx, float centery, float centerz,float radius){
-    cout << "shere creation";
+   // cout << "shere creation";
     this->radius=radius;
     this->center=Point(centerx,centery,centerz);
 }
@@ -143,7 +143,8 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
     beta = ((pxminpos*prodmin1) + (pyminpos*prodmin2) + (pzminpos*prodmin3))/mult ;
     gamma = ((dirvec[3]*prodmin4) + (dirvec[2]*prodmin5) + (dirvec[0]*prodmin6))/mult;
     alpha = 1 - beta - gamma;
-    if (gamma < 0 || gamma > 1 || (beta<0 || beta> (1-gamma))) {    cout <<"f";
+    if (gamma < 0 || gamma > 1 || (beta<0 || beta> (1-gamma))) {  
+    	//cout <<"f";
 
          return false;
 
@@ -160,7 +161,7 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
         local->setNormal(sn);
  
     }
-    cout <<"true";
+   // cout <<"true";
     return true;
     
     
