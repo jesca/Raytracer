@@ -16,22 +16,22 @@ void RayTracer::ambient(Color ka, Color* color){
 
 }
 
-/*
-void RayTracer::diffuse(Color kd,Color* color, Vector3f n, DirectionalLight dlight){
-    Vector3f nhat = n;
-    Vector3f lhat = dlight.getDir();
-    Color lcolor=dlight.getColor();
-    nhat.normalize();
-    lhat.normalize();
-    float ndotl = fmax(nhat.dot(lhat),0.0f);
-    float red = kd.getR()*(lcolor.getR()*ndotl);
-    float green =kd.getG()*(lcolor.getG()*ndotl);
-    float blue = kd.getB()*(lcolor.getB()*ndotl);
-    color->add(Color(red,green,blue));
 
-   
+//create the reflectance ray 
+Ray RayTracer::refRay(LocalGeo local, Ray &ray) {
+    Vector3f normal = local.getNormal();
+    Point pospoint = local.getPos();
+    Vector3f pos = Vector3f(pospoint.getX(),pospoint.getY(),pospoint.getZ());
+    float LdotN = ray.dir().dot(normal);
+    Vector3f rdir = ray.dir() - ((2*LdotN)*normal);
+   // rdir.normalize();
+    Vector3f posfinal = pos + .04 * rdir;
+    Point finalpospoint = Point(rdir[0], rdir[1], rdir[2]);
+    return Ray(finalpospoint, rdir, 0, 10101);
 }
-*/
+
+
+
 void RayTracer::diffuse(Color kd,Color* color, Vector3f n, Ray lray, Color lcolor){
     Vector3f nhat = n;
     Vector3f lhat = lray.dir();
