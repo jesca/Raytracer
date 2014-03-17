@@ -21,14 +21,41 @@ bool parseLine(string line){
     ss >> op;
     if (op[0] == '#') {
         return true;
+    } else if (op.compare("sphere")==0) {
+        float x,y,z,r;
+        ss >>x >>y >>z >>r;
+        Sphere sphere (x,y,z,r);
+        Matrix4f matr;
+        matr <<
+        1,0,0,0,
+        0,1,0,0,
+        0,0,1,0,
+        0,0,0,1;
+        Transform trans(matr);
+        BRDF b(Color(.6,.6,.6),Color(.4,.6,.8),Color(.0,.1,.1),Color(0,0,0));
+        Material mat(b);
+        Primitive g = GeometricPrimitive (&sphere, trans, &mat);
+        // primlist.push_back(&g);
     } else if (op.compare("v")==0){
         float x,y,z;
         ss >>x >>y >>z;
-        Point(x,y,z);
+        points.push_back(Point(x,y,z));
     } else if (op.compare("f")==0){
         int i,j,k;
         ss >>i >>j >>k;
-        // Primitive tri = Triangle(point);
+        Triangle tri(points.at(i-1),points.at(j-1),points.at(k-1));
+        Matrix4f matr;
+        matr <<
+        1,0,0,0,
+        0,1,0,0,
+        0,0,1,0,
+        0,0,0,1;
+        Transform trans(matr);
+        BRDF b(Color(.6,.6,.6),Color(.4,.6,.8),Color(.0,.1,.1),Color(0,0,0));
+        Material mat(b);
+        Primitive g = GeometricPrimitive (&tri, trans, &mat);
+
+        primlist.push_back(&g);
 
     }
     if (ss.fail()){
@@ -54,7 +81,7 @@ void parseScene(string filename){
 
 
 int main(int argc, char** args){
-    
+    parseScene("test.obj");
     Film film (width, height);
     Color color(0,0,0);
     Sample s1(0,0);
@@ -68,7 +95,8 @@ int main(int argc, char** args){
     Vector3f n1(1,0,0);
     LocalGeo local = LocalGeo(p1, n1);
     Sphere test(0,-1,10,1);
-    Sphere test2(0,.5,8,.7);
+    Sphere test2(.5,1,8,.7);
+    Sphere test3(.5,2.2,7,.5);
     
     Matrix4f matr;
     matr <<
@@ -87,7 +115,7 @@ int main(int argc, char** args){
 
     GeometricPrimitive pr = GeometricPrimitive(&test, trans,&testmaterial);
     GeometricPrimitive p2 = GeometricPrimitive(&test2, trans,&testmaterial2);
-    GeometricPrimitive p3 = GeometricPrimitive(&tri, trans,&testmaterial2);
+    GeometricPrimitive p3 = GeometricPrimitive(&tri, trans,&testmaterial);
     vector<Primitive*> geoprimlist(3);
     geoprimlist.at(0)=&pr; geoprimlist.at(1)=&p2; geoprimlist.at(2)=&p3;
     AggregatePrimitive aprim = AggregatePrimitive(geoprimlist);
