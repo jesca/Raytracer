@@ -187,7 +187,7 @@ bool Triangle::intersectP(Ray& ray) {
     float sub5 = p1v[1]-p3v[1];
     float sub6 = p1v[2]-p3v[2];
 
-    loat prodmin1 = sub5*dirvec[2] - dirvec[1]*sub6;
+    float prodmin1 = sub5*dirvec[2] - dirvec[1]*sub6;
     float prodmin2 = dirvec[0]*sub6 - sub4*dirvec[2];
     float prodmin3 = sub4*dirvec[1] - sub5*dirvec[0];
     float prodmin4 = sub1*pyminpos - pxminpos*sub2;
