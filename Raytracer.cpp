@@ -86,10 +86,7 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     
     else {
 
-        //create directional light
-    Vector3f d1_dir = Vector3f(100,-100,100);
-    Color d1_col=Color(.3,.3,.6);
-    DirectionalLight dlight= DirectionalLight(d1_dir,d1_col);
+        
 
         //there is an intersection, loop through all the lights
        // Ray lr=Ray(Point(), Vector3f(3), 0, 9999999);
@@ -97,8 +94,10 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         in.getPrimitive()->getBRDF(in.getLocal(), &brdf);
         Color c=Color(.2,.3,.4);
         Ray lray;
-        dlight.generateLightRay(in.getLocal(), &lray,c);
         ambient(brdf.getKA(), color);
+        for(int i=0; i<lights.size(); i++){
+        lights.at(i)->generateLightRay(in.getLocal(), &lray,c);
+        
         
         if(!primitive->intersectP(lray)){
         Vector3f normal = in.getLocal().getNormal();
@@ -109,6 +108,7 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
         diffuse(brdf.getKD(), color, normal, lray, c);
         specular(brdf.getKS(), color, v, normal,70,lray, c);
         // *color = Color(1,0,0);
+    }
     }
     }
     if (brdf.getKR().getR() > 0 || brdf.getKR().getG() > 0 || brdf.getKR().getB() > 0) {

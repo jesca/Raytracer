@@ -20,10 +20,13 @@
 class RayTracer {
 public:
     RayTracer();
-    RayTracer(Primitive* p){
+    RayTracer(Primitive* p, vector<Light*> l){
         primitive = p;
         maxDepth = 5;
         thit = 0;
+        for (vector<Light*>::iterator i = l.begin(); i != l.end(); i++) {
+        lights.push_back(*i);
+    }
     }
     void trace(Ray& ray, int depth, Color* color);
 private:
@@ -37,6 +40,7 @@ private:
     float thit;
     Intersection in;
     Primitive* primitive;
+    vector<Light*> lights;
     
 };
 

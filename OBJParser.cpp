@@ -91,16 +91,22 @@ int main(int argc, char** args){
     vector<Primitive*> geoprimlist(3);
     geoprimlist.at(0)=&pr; geoprimlist.at(1)=&p2; geoprimlist.at(2)=&p3;
     AggregatePrimitive aprim = AggregatePrimitive(geoprimlist);
-    RayTracer rayTracer(&aprim);
-
-
     
-    
+
     //create specular light
     Color p1_color = Color(.6,.7,.6);
     Vector3f p1_l = Vector3f(-100,-100,100);
     PointLight plight = PointLight(p1_l,p1_color);
-    Color tempColor;
+    //create directional light
+    Vector3f d1_dir = Vector3f(100,-100,100);
+    Color d1_col=Color(.3,.3,.6);
+    DirectionalLight dlight= DirectionalLight(d1_dir,d1_col);
+    vector<Light*> lights(2);
+    lights.at(0)=&plight; lights.at(1)=&dlight;
+    RayTracer rayTracer(&aprim, lights);
+    
+    
+    
     //temporary for testing
     for(int j=0; j<height; j++){
         for(int i=0; i<width; i++){
