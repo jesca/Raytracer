@@ -67,8 +67,8 @@ int main(int argc, char** args){
     Point p1(0,0,0);
     Vector3f n1(1,0,0);
     LocalGeo local = LocalGeo(p1, n1);
-    Sphere test(1,-1,10,1);
-    Sphere test2(0,1,8,.7);
+    Sphere test(0,-1,10,1);
+    Sphere test2(0,.5,8,.7);
     
     Matrix4f matr;
     matr <<
@@ -98,7 +98,7 @@ int main(int argc, char** args){
     Vector3f p1_l = Vector3f(-100,-100,100);
     PointLight plight = PointLight(p1_l,p1_color);
     //create directional light
-    Vector3f d1_dir = Vector3f(100,-100,100);
+    Vector3f d1_dir = Vector3f(-100,-100,100);
     Color d1_col=Color(.3,.3,.6);
     DirectionalLight dlight= DirectionalLight(d1_dir,d1_col);
     vector<Light*> lights(2);

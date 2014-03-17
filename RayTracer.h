@@ -13,8 +13,9 @@
 #include "AggregatePrimitive.h"
 #include "BRDF.h"
 #include "Light.h"
-
+#include <vector>
 #include "Shape.h"
+#define vector std::vector
 #define Vector3f Eigen::Vector3f
 
 class RayTracer {
