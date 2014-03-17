@@ -1,6 +1,7 @@
 #include "Shape.h"
 
 Sphere::Sphere(float centerx, float centery, float centerz,float radius){
+    cout << "shere creation";
     this->radius=radius;
     this->center=Point(centerx,centery,centerz);
 }
@@ -96,9 +97,67 @@ Triangle::Triangle(Point a, Point b, Point c)
     normal =(p2v - p1v).cross(p3v-p1v);
     normal.normalize();
     
+    
 }
 
 
+/*
+
+bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
+
+{
+    //normal dot ray direction
+    float ndr = normal.dot(ray.dir());
+    //ray parallel to triangle
+    float d,t;
+    Vector3f posvec = Vector3f(ray.pos().getX(), ray.pos().getY(), ray.pos().getZ());
+    if (ndr==0) {
+        float d = normal.dot(p1v);
+        float t = -normal.dot(posvec)+d / ndr;
+    }
+    if (t<0) {
+        return false;
+            //ray behind triangle
+    }
+    
+
+    Point phit = ray.pos();
+    phit.add(t * ray.dir());
+
+    //edge0
+    Vector3f bmina = p2v-p1v;
+    Vector3f cminb = p3v-p2v;
+    Vector3f cmina = p3v-p1v;
+    
+    
+    
+    // inside-out test edge0
+    Vector3f phitv=Vector3f(phit.getX(), phit.getY(), phit.getZ());
+    
+    Vector3f v1p = phitv-(p1v);
+    float v = normal.dot(bmina.cross(v1p));
+    if (v < 0) return false; // P outside triangle
+    
+    // edge1
+    Vector3f v2p = phitv -p2v;
+    float w = normal.dot(cminb.cross(v2p));
+    if (w < 0) return false; // P outside triangle
+    
+    //edge3
+    Vector3f v3p = phitv-(p3v);
+    float u = normal.dot(cmina.cross(v3p));
+    if (u < 0) return false; // P outside triangle
+
+    
+    //update stuff here...soon.
+    thit = &t;
+    local->setPos(phit);
+    Vector3f norm = v1p.cross(v2p);
+ 
+    local->setNormal(norm);
+}
+
+*/
 
 bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
 {
@@ -137,6 +196,7 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
     *thit = (-((sub6*prodmin4) + (sub5*prodmin5) + (sub4*prodmin6)) / mult);
     
     if (*thit < ray.t_min() || *thit > ray.t_max()) {
+ 
         return false;
 
     }
@@ -144,8 +204,9 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
     beta = ((pxminpos*prodmin1) + (pyminpos*prodmin2) + (pzminpos*prodmin3))/mult ;
     gamma = ((dirz*prodmin4) + (diry*prodmin5) + (dirx*prodmin6))/mult;
     alpha = 1 - beta - gamma;
-    if (gamma < 0 || gamma > 1 || (beta<0 || beta> (1-gamma))) {
-        return false;
+    if (gamma < 0 || gamma > 1 || (beta<0 || beta> (1-gamma))) {    cout <<"f";
+
+         return false;
 
     }
     
@@ -160,10 +221,63 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
         local->setNormal(sn);
  
     }
+    cout <<"true";
     return true;
     
     
      }
 
+
 bool Triangle::intersectP(Ray& ray) {
+    
+    float alpha, beta, gamma;
+    
+    //calculate positions here
+    float posx = ray.pos().getX();
+    float posy = ray.pos().getY();
+    float posz = ray.pos().getZ();
+    Vector3f raypos(posx, posy, posz);
+    
+    float dirx = ray.dir()[0];
+    float diry = ray.dir()[1];
+    float dirz = ray.dir()[2];
+    
+    float sub1 = p1v[0] - p2v[0];
+    float sub2 = p1v[1]-p2v[1];
+    float sub3 = p1v[2]-p2v[2];
+    float sub4 = p1v[0] - p3v[0];
+    float sub5 = p1v[1]-p3v[1];
+    float sub6 = p1v[2]-p3v[2];
+    
+    float pxminpos = p1v[0] - posx;
+    float pyminpos = p1v[1] - posy;
+    float pzminpos = p1v[2] - posz;
+    
+    float prodmin1 = sub5*dirz - diry*sub6;
+    float prodmin2 = dirx*sub6 - sub4*dirz;
+    float prodmin3 = sub4*diry - sub5*dirx;
+    float prodmin4 = sub1*pyminpos - pxminpos*sub2;
+    float prodmin5 = pxminpos*sub3 - sub1*pzminpos;
+    float prodmin6 = sub2*pzminpos - pyminpos*sub3;
+    
+    float mult = sub1*(prodmin1) + sub2*(prodmin2) + sub3*(prodmin3);
+    //calculate thit here
+    *thit = (-((sub6*prodmin4) + (sub5*prodmin5) + (sub4*prodmin6)) / mult);
+    
+    if (*thit < ray.t_min() || *thit > ray.t_max()) {
+        return false;
+        
+    }
+    
+    beta = ((pxminpos*prodmin1) + (pyminpos*prodmin2) + (pzminpos*prodmin3))/mult ;
+    gamma = ((dirz*prodmin4) + (diry*prodmin5) + (dirx*prodmin6))/mult;
+    alpha = 1 - beta - gamma;
+    if (gamma < 0 || gamma > 1 || (beta<0 || beta> (1-gamma))) {
+        return false;
+        
+    }
+    
+    return true;
+ 
 }
+
