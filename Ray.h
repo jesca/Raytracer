@@ -13,6 +13,7 @@
 
 class Ray {
 public:
+    Ray(){}
     Ray (Point, Vector3f, float, float);
     Point pos(void);
     Vector3f dir(void);

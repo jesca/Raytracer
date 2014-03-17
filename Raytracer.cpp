@@ -6,7 +6,7 @@
 #define vector std::vector
 
 RayTracer::RayTracer(){
-    maxDepth = 10;
+    maxDepth = 5;
     numLights = 1;
     thit = 0;
     PointLight pl;
@@ -73,7 +73,7 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
     color->setB(0);
     if(depth > maxDepth){
         //color black
-        cout << "maxDepth \n";
+        // cout << "maxDepth \n";
         return;
     }
 
@@ -93,19 +93,38 @@ void RayTracer::trace(Ray& ray, int depth, Color* color){
 
         //there is an intersection, loop through all the lights
        // Ray lr=Ray(Point(), Vector3f(3), 0, 9999999);
+        Ray lray;
         in.getPrimitive()->getBRDF(in.getLocal(), &brdf);
         Color c=Color(.2,.3,.4);
-        dlight.generateLightRay(in.getLocal(), &ray,c);
+        dlight.generateLightRay(in.getLocal(), &lray,c);
         
-        
+        if(!primitive->intersectP(lray)){
         Vector3f normal = in.getLocal().getNormal();
         normal.normalize();
 
         Vector3f v = ray.dir(); v.normalize();
         ambient(brdf.getKA(), color);
-        diffuse(brdf.getKD(), color, normal, ray, c);
-        specular(brdf.getKS(), color, v, normal,70,ray, c);
+        diffuse(brdf.getKD(), color, normal, lray, c);
+        specular(brdf.getKS(), color, v, normal,70,lray, c);
         // *color = Color(1,0,0);
+    }
+    }
+    if (brdf.getKR().getR() > 0 || brdf.getKR().getG() > 0 || brdf.getKR().getB() > 0) {
+            // reflectRay = createReflectRay(in.local, ray);
+        Color tempColor;
+        Point pospoint = in.getLocal().getPos();
+    Vector3f pos = Vector3f(pospoint.getX(),pospoint.getY(),pospoint.getZ());
+    pos.normalize();
+    float Ldotn = pos.dot(in.getLocal().getNormal());
+    Vector3f r = pos - 2*Ldotn*(in.getLocal().getNormal());
+    in.getLocal().getPos().add(r);
+            Ray reflectRay = Ray( in.getLocal().getPos(), r, thit, 100 );
+            // Make a recursive call to trace the reflected ray
+            trace(reflectRay, depth+1, &tempColor);
+            float red = brdf.getKR().getR()*tempColor.getR();
+            float green = brdf.getKR().getG()*tempColor.getG();
+            float blue = brdf.getKR().getB()*tempColor.getB();
+            color->add(Color(red,green,blue));
     }
          
 }

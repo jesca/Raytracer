@@ -22,7 +22,7 @@ public:
     RayTracer();
     RayTracer(Primitive* p){
         primitive = p;
-        maxDepth = 10;
+        maxDepth = 5;
         thit = 0;
     }
     void trace(Ray& ray, int depth, Color* color);

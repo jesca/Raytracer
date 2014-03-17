@@ -2,14 +2,55 @@
 #include "Eigen/Dense"
 #include "Camera.h"
 #include <cassert>
+#include <string>
 #define Vector3f Eigen::Vector3f
 #define cout std::cout
 
-#define width 600
-#define height 600
+#define width 500
+#define height 500
 
 using namespace std;
+vector<Point> points;
+vector<Primitive*> primlist;
+bool parseLine(string line){
+    string op;
+    if (line.empty())
+        return true;
+    stringstream ss(stringstream :: in | stringstream :: out);
+    ss.str(line);
+    ss >> op;
+    if (op[0] == '#') {
+        return true;
+    } else if (op.compare("v")==0){
+        float x,y,z;
+        ss >>x >>y >>z;
+        Point(x,y,z);
+    } else if (op.compare("f")==0){
+        int i,j,k;
+        ss >>i >>j >>k;
+        // Primitive tri = Triangle(point);
 
+    }
+    if (ss.fail()){
+        return false;
+    }
+    return true;
+}
+
+void parseScene(string filename){
+    char line[1024];
+    ifstream inFile(filename.c_str(), ifstream :: in);
+    if (!inFile){
+        cout << "Could not open file" << filename;
+        exit(1);
+    }
+    while (inFile.good()){
+        inFile.getline(line, 1023);
+        if (!parseLine(string(line)))
+            exit(1);
+    }
+    inFile.close();
+}
 
 
 int main(int argc, char** args){
@@ -26,7 +67,7 @@ int main(int argc, char** args){
     Point p1(0,0,0);
     Vector3f n1(1,0,0);
     LocalGeo local = LocalGeo(p1, n1);
-    Sphere test(3,-2,7,.5);
+    Sphere test(1,-2,7,.5);
     Sphere test2(0,0,8,1);
     
     Matrix4f matr;
@@ -55,14 +96,16 @@ int main(int argc, char** args){
     Color p1_color = Color(.6,.7,.6);
     Vector3f p1_l = Vector3f(-100,-100,100);
     PointLight plight = PointLight(p1_l,p1_color);
-    
-    
+    Color tempColor;
+    float n = 5.0;
     //temporary for testing
     for(int j=0; j<height; j++){
         for(int i=0; i<width; i++){
-            s1 = Sample(i, j);
+   
+            s1 = Sample(i+.5, j);
             camera.generateRay(s1, &ray);
             rayTracer.trace(ray, 1, &color);
+
             film.commit(s1, color);
         }
         
