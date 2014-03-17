@@ -40,11 +40,17 @@ private:
 class Triangle : public Shape
 {
 public:
-     Triangle(Vector3f a,Vector3f b, Vector3f c); //fix later
+     Triangle(Point a,Point b, Point c); //fix later
 	bool intersect(Ray& ray, float* thit, LocalGeo* local);
 	bool intersectP(Ray& ray);
-    
-    
+private:
+    Point p1;
+    Point p2;
+    Point p3;
+    Vector3f normal;
+    Vector3f p1v;
+    Vector3f p2v;
+    Vector3f p3v;
 };
 
 #endif
