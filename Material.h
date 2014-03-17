@@ -10,12 +10,12 @@
 
 class Material {
 public:
-    Material();
+    Material(){}
     Material(BRDF b) {
         constantBRDF=b;
     }
     void getBRDF(LocalGeo& local, BRDF* brdf);
-
+    void setBRDF(BRDF b){constantBRDF=b;}
 private:
     BRDF constantBRDF;
 };

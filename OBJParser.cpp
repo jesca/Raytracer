@@ -12,7 +12,7 @@
 using namespace std;
 vector<Point> points;
 vector<Primitive*> primlist;
-bool parseLine(string line){
+bool parseLine(string line, Material* mat){
     string op;
     if (line.empty())
         return true;
@@ -21,6 +21,10 @@ bool parseLine(string line){
     ss >> op;
     if (op[0] == '#') {
         return true;
+    } else if (op.compare("brdf")==0) {
+        float kdr,kdg,kdb, ksr,ksg,ksb, kar,kag,kab, krr,krg,krb;
+        ss >> kdr >> kdg >> kdb >> ksr >> ksg >> ksb >> kar >> kag >> kab >> krr >> krg >> krb;
+        mat->setBRDF(BRDF(Color(kdr,kdg,kdb), Color(ksr,ksg,ksb), Color(kar,kag,kab), Color(krr,krg,krb)));
     } else if (op.compare("sphere")==0) {
         float x,y,z,r;
         ss >>x >>y >>z >>r;
@@ -32,9 +36,7 @@ bool parseLine(string line){
         0,0,1,0,
         0,0,0,1;
         Transform trans(matr);
-        BRDF b(Color(.6,.6,.6),Color(.4,.6,.8),Color(.0,.1,.1),Color(0,0,0));
-        Material mat(b);
-        Primitive g = GeometricPrimitive (&sphere, trans, &mat);
+        Primitive g = GeometricPrimitive (&sphere, trans, mat);
         // primlist.push_back(&g);
     } else if (op.compare("v")==0){
         float x,y,z;
@@ -52,9 +54,7 @@ bool parseLine(string line){
         0,0,1,0,
         0,0,0,1;
         Transform trans(matr);
-        BRDF b(Color(.6,.6,.6),Color(.4,.6,.8),Color(.0,.1,.1),Color(0,0,0));
-        Material mat(b);
-        Primitive g = GeometricPrimitive (&tri, trans, &mat);
+        Primitive g = GeometricPrimitive (&tri, trans, mat);
 
         primlist.push_back(&g);
 
@@ -72,9 +72,10 @@ void parseScene(string filename){
         cout << "Could not open file" << filename;
         exit(1);
     }
+    Material mat;
     while (inFile.good()){
         inFile.getline(line, 1023);
-        if (!parseLine(string(line)))
+        if (!parseLine(string(line),&mat))
             exit(1);
     }
     inFile.close();
