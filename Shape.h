@@ -44,13 +44,13 @@ public:
 	bool intersect(Ray& ray, float* thit, LocalGeo* local);
 	bool intersectP(Ray& ray);
 private:
-    Point p1;
-    Point p2;
-    Point p3;
+    Point p1, p2, p3;
     Vector3f normal;
-    Vector3f p1v;
-    Vector3f p2v;
-    Vector3f p3v;
+    Vector3f p1v, p2v,p3v;
+    Vector3f norm1, norm2, norm3;
+    bool spec_normal;
+
+
 };
 
 #endif
