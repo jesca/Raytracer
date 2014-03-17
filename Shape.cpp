@@ -110,6 +110,11 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
     Vector3f raypos(ray.pos().getX(), ray.pos().getY(), ray.pos().getZ());
     Vector3f dirvec(ray.dir()[0], ray.dir()[1], ray.dir()[2]);
     
+    float pxminpos = p1v[0] - raypos[0];
+    float pyminpos = p1v[1] - raypos[1];
+    float pzminpos = p1v[2] - raypos[2];
+    
+    
     float sub1 = p1v[0] - p2v[0];
     float sub2 = p1v[1]-p2v[1];
     float sub3 = p1v[2]-p2v[2];
@@ -117,10 +122,7 @@ bool Triangle::intersect(Ray& ray, float* thit, LocalGeo* local)
     float sub5 = p1v[1]-p3v[1];
     float sub6 = p1v[2]-p3v[2];
     
-    float pxminpos = p1v[0] - raypos[0];
-    float pyminpos = p1v[1] - raypos[1];
-    float pzminpos = p1v[2] - raypos[2];
-    
+
     float prodmin1 = sub5*dirvec[2] - dirvec[1]*sub6;
     float prodmin2 = dirvec[0]*sub6 - sub4*dirvec[2];
     float prodmin3 = sub4*dirvec[1] - sub5*dirvec[0];
@@ -172,7 +174,11 @@ bool Triangle::intersectP(Ray& ray) {
     //calculate positions here
     Vector3f raypos(ray.pos().getX(), ray.pos().getY(), ray.pos().getZ());
     Vector3f dirvec(ray.dir()[0], ray.dir()[1], ray.dir()[2]);
-
+    
+    float pxminpos = p1v[0] - raypos[0];
+    float pyminpos = p1v[1] - raypos[1];
+    float pzminpos = p1v[2] - raypos[2];
+    
     
     float sub1 = p1v[0] - p2v[0];
     float sub2 = p1v[1]-p2v[1];
@@ -180,11 +186,7 @@ bool Triangle::intersectP(Ray& ray) {
     float sub4 = p1v[0] - p3v[0];
     float sub5 = p1v[1]-p3v[1];
     float sub6 = p1v[2]-p3v[2];
-    
-    float pxminpos = p1v[0] - raypos[0];
-    float pyminpos = p1v[1] - raypos[1];
-    float pzminpos = p1v[2] - raypos[2];
-    
+
     loat prodmin1 = sub5*dirvec[2] - dirvec[1]*sub6;
     float prodmin2 = dirvec[0]*sub6 - sub4*dirvec[2];
     float prodmin3 = sub4*dirvec[1] - sub5*dirvec[0];
