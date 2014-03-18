@@ -13,10 +13,10 @@ Matrix4f Transform::scale(float x, float y, float z) {
 }
 
 Matrix4f Transform::translate(float x, float y, float z) {
-	return Matrix4f(1.0, 0.0, 0.0, x,
-				0.0, 1.0, 0.0, y,
-				0.0, 0.0, 1.0, z,
-				0.0, 0.0, 0.0, 1.0);
+	return Matrix4f(1.0, 0.0, 0.0, tx,
+			0.0, 1.0, 0.0, ty,
+			0.0, 0.0, 1.0, tz,
+			0.0, 0.0, 0.0, 1.0);
 }
 
 
